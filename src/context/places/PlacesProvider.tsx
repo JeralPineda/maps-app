@@ -1,6 +1,8 @@
-import { useReducer } from 'react';
+/* eslint-disable @typescript-eslint/no-floating-promises */
+import { useReducer, useEffect } from 'react';
 import { PlacesContext } from './PlacesContext';
 import { placesReducer } from './placesReducer';
+import { getUserLocation } from '../../helpers';
 
 export interface PlacesState {
   isLoading: boolean;
@@ -18,6 +20,12 @@ export interface Props {
 
 export const PlacesProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(placesReducer, INITIAL_STATE);
+
+  useEffect(() => {
+    getUserLocation().then((lngLat) =>
+      dispatch({ type: 'setUserLocation', payload: lngLat })
+    );
+  }, []);
 
   return (
     <PlacesContext.Provider
