@@ -1,14 +1,16 @@
-import { useRef, ChangeEvent } from 'react';
+import { useRef, ChangeEvent, useContext } from 'react';
+import { PlacesContext } from '../context';
 
 export const SearchBar = () => {
+  const { searchPlacesByTerm } = useContext(PlacesContext);
   const debounceRef = useRef<number | null>();
 
   const onQueryChanged = (event: ChangeEvent<HTMLInputElement>) => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
 
     debounceRef.current = setTimeout(() => {
-      //TODO: Buscar consulta
-      console.log('debounced value', event.target.value);
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      searchPlacesByTerm(event.target.value);
     }, 350);
   };
 
