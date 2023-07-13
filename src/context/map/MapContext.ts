@@ -6,7 +6,7 @@ interface MapContextProps {
   map?: Map;
 
   //* Métodos
-  setMap?: (map: Map) => void;
+  setMap: (map: Map) => void;
 }
 
 export const MapContext = createContext({} as MapContextProps);
