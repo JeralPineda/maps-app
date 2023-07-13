@@ -40,6 +40,7 @@ export const MapProvider = ({ children }: Props) => {
         ...state,
         //* Métodos
         setMap,
+        // getRouteBetweenPoints,
       }}
     >
       {children}
