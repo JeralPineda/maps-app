@@ -7,7 +7,7 @@ export const SearchResults = () => {
   const [activeId, setActiveId] = useState('');
 
   const { places, isLoadingPlaces, userLocation } = useContext(PlacesContext);
-  const { map } = useContext(MapContext);
+  const { map, getRouteBetweenPoints } = useContext(MapContext);
 
   const onPlaceClicked = (place: Feature) => {
     setActiveId(place.id);
@@ -18,12 +18,13 @@ export const SearchResults = () => {
     });
   };
 
-  // const getRoute = (place: Feature) => {
-  //   if (!userLocation) return;
-  //   const [lng, lat] = place.center;
+  const getRoute = (place: Feature) => {
+    if (!userLocation) return;
+    const [lng, lat] = place.center;
 
-  //   getRouteBetweenPoints(userLocation, [lng, lat]);
-  // };
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    getRouteBetweenPoints(userLocation, [lng, lat]);
+  };
 
   if (isLoadingPlaces) {
     return <LoadingPlaces />;
@@ -53,7 +54,7 @@ export const SearchResults = () => {
           </p>
 
           <button
-            // onClick={() => getRoute(place)}
+            onClick={() => getRoute(place)}
             className={`btn btn-sm ${
               activeId === place.id
                 ? 'btn-outline-light'
